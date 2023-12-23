@@ -1,0 +1,122 @@
+%% uoythesisoptions.sty
+%% Copyright 2023 A. Grau
+%
+% This work may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3 of this license or (at your option)
+% any later version, with the exception that distribution of Derived Work is not
+% subject to the requirements of section 6.2.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX version
+% 2005/12/01 or later.
+%
+% Current package version: v1.0
+% Changelog:
+% 2023/12/23: Creation of this helper package for the uoythesis.cls class
+%
+% This work has the LPPL maintenance status `maintained`.
+%
+% The Current Maintainer of this work is A. Grau.
+%
+% This work consists of all the files listed in the README.md,
+% and provides a copy of the original hosted on
+% https://github.com/PDLT-University-of-York/UoYPhDThesis.
+
+\ProvidesPackage{uoythesisoptions}[2023/12/23 v1.0 Options for the York Thesis class]
+\@ifundefined{is@uoyth@classloaded}{
+		\PackageError{uoythesisoption}{
+		  This package should only be used if the uoythesis class is used
+		}{
+		  Verify that you are indeed using the uoythesis class, or remove the loading of this package
+		}  % make error
+	}{ } % silently pass
+
+%%% ==== Set options of class
+% Possible options:
+% - pagenb: with value `head' or `foot', sets the placement of the page number
+%     in the header or the footer
+% - spine, foredge, top, bottom: takes a dimension as a value (e.g. 2cm) to 
+%     set the margin value of the corresponding sides
+% - hratio, vratio: respectively horizontal and vertical ratio value between
+%     the margins of that direction (spine/foredge and top/bottom)
+% - hmargins, vmargins: set the dimension given to make symmetrical margins 
+%     respectively horizontally or vertically
+% - margins: a set of `key=value' commands taking any of the above margin keys
+% Example: default values as equivalent to the following
+\uoythsetup{
+  pagenb=head,
+  hmargins=3cm,
+  vmargins=4cm
+}
+
+% Margins of the document can also be set using some helper macros defined 
+% by the class using one of: \horizontalmarginsvalue, \horizontalmarginsratio,
+% \verticalmarginsvalue or \verticalmarginsratio (see documentation for details
+% on their use).
+% Examples:
+%   \horizontalmarginsvalue{3cm} %-> sets both spine and foredge margin to 3cm (current default)
+%   \horizontalmarginsvalue[2cm]{3cm} %-> sets spine to 3cm and foredge to 2cm
+%   \horizontalmarginsratio[0.8]{40mm} %-> sets spine to 4cm and foredge to 3.2cm (4*0.8)
+
+
+%%% ==== Styling chapters/sections
+% See the manual of the `memoir` class for more predefined styles:
+% - Appendix B for chapter styles (or for more examples consult
+%   https://ctan.uib.no/info/latex-samples/MemoirChapStyles/MemoirChapStyles.pdf);
+% - Section 6.9 for lower level heading styles.
+% To learn how to define your own, see Chapter 6.
+% The order of call between \headstyles and \chapterstyle is important since
+% the chapter header is defined in both of these, but the former defines
+% the other sections style headers, so calling \headstyle second would
+% override the parameters of \chapterstyle.
+
+% As a default, use `dowding' for the [sub]sections headers and 
+% `dash' for the chapter style
+\headstyles{dowding}
+\chapterstyle{dash}
+
+% Typesetting of the sectionning commands can easily be modified to suit
+% one's preferences (see 6.6 of memoir package documentation).
+% As an example, this thesis template is set as:
+\setsecheadstyle{\normalfont\large\MakeTextUppercase} %-> sections in large CAPS
+\setsubsecheadstyle{\normalfont\scshape} %-> subsections in small caps
+\setsubsecindent{1em} %-> indent subsections by 1em
+\setsubsubsecheadstyle{\normalfont\normalsize\itshape} %-> subsubsections in italics
+\setsubsubsecindent{2em} %-> subsubsections indented
+\setparaheadstyle{\normalfont\normalsize\slshape} %-> paragraphs in slanted
+% Making the title and number of the chapter bigger and in bold
+\renewcommand*{\chapnumfont}{\normalfont\LARGE\bfseries}
+\renewcommand*{\chaptitlefont}{\normalfont\LARGE\bfseries}
+
+%%% ==== Styling lists
+% Uncomment one of the options below to reduce the spacing between list items.
+% See Section 8.6 of the manual of the `memoir` class.
+\firmlists   % Slightly less space than the default
+% \tightlists  % No extra space
+
+%%% ==== Differences between draft and final version
+\RequirePackage{graphicx}
+\ifdraftdoc
+  %% Extra options for draft versions only
+  % NOTE: `draftwatermark` needs a scalable font.
+  \usepackage[firstpageonly]{draftwatermark}  % Watermark on the front page
+\else
+  % Extra package for final version only
+  \usepackage{microtype}                      % Enable microtypographical adjustments
+\fi
+
+%%% ==== Helper to fix cross-refs in subfiles
+\ifuoyth@noxr
+\else
+  \newcommand{\fixsubfilexr}{
+    \let\oldref\ref 
+    \AtBeginDocument{\renewcommand{\ref}[1]{\@ifundefined{r@##1}{\oldref{XR-##1}}{\oldref{##1}}}}
+  }
+\fi
+
+%%%% ==== DEBUG
+% If you want the version of the packages you use to appear
+% in the log file for debugging, uncomment the following line:
+% \listfiles
+
+\endinput

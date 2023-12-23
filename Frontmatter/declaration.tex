@@ -1,0 +1,59 @@
+%% declaration.tex
+%% Copyright 2023 A. Grau
+%
+% This work may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3 of this license or (at your option)
+% any later version, with the exception that distribution of Derived Work is not
+% subject to the requirements of section 6.2.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX version
+% 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained`.
+%
+% The Current Maintainer of this work is A. Grau.
+%
+% This work consists of all the files listed in the README.md,
+% and provides a copy of the original hosted on
+% https://github.com/PDLT-University-of-York/UoYPhDThesis.
+\documentclass[../thesis]{subfiles}
+
+\title{Author's declaration} 
+\date{(version of \today)} \author{}
+\fixsubfilexr
+
+% for overleaf to get the cross references, uncomment the following
+% \myexternaldocument{thesis} 
+
+\begin{document}
+\ifSubfilesClassLoaded{ 
+	\frontmatter* \makeoddfoot{plain}{(version of \today)}{\thepage}{}
+	}{}
+
+\chapter{Author's declaration}
+% TODO: verify the declaration
+\todo[noline]{Write the author's declaration}
+% FORMAT: some special wording needed to be included
+\begin{quote}
+\centering \scshape \slshape The \texttt{Author's declaration} section is a requirement and should be stated appropriately.
+In particular, it needs to include references to all papers already published or under review, with a reference in the bibliography, as well as the following text:
+\end{quote}
+\bigskip
+\begin{verbatim}
+   I declare that the work presented in this thesis, except where
+   otherwise stated, is based on my own research carried out at
+   the University of York and has not been submitted previously
+   for any degree at this or any other university. Sources are
+   acknowledged by explicit references.
+\end{verbatim}
+% WARNING: Any material included in the thesis that has been presented before
+%          should be mentioned here, with full references for papers published
+%          or under review.
+
+
+% Show elements mentioned above to verify they are included in the bibliography
+\ifSubfilesClassLoaded{ 
+  \printbibliography[heading=bibintoc, title=References]
+  }{}
+\end{document}

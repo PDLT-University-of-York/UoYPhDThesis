@@ -1,0 +1,128 @@
+%% preamble.tex
+%% Copyright 2023 A. Grau
+%
+% This work may be distributed and/or modified under the conditions of the LaTeX
+% Project Public License, either version 1.3 of this license or (at your option)
+% any later version, with the exception that distribution of Derived Work is not
+% subject to the requirements of section 6.2.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX version
+% 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained`.
+%
+% The Current Maintainer of this work is A. Grau.
+%
+% This work consists of all the files listed in the README.md,
+% and provides a copy of the original hosted on
+% https://github.com/PDLT-University-of-York/UoYPhDThesis.
+
+%% Purpose: In this document you list all the packages you want as
+% well as setting the different macros that you will want
+
+%%% ==== Fonts
+% We recommend to set some nicer fonts than the default
+\usepackage[utf8]{inputenc}  % Allow unicode input
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}         % A nice scalable font based on Computer Modern.
+                             % For more options, see e.g.
+                             % https://tex.stackexchange.com/a/59706/27664
+
+%%% ===== Folder structure
+% In order to use a structure of a thesis split into multiple files,
+% we use the subfiles package and set the name of the corresponding 
+% main file to allow references
+\usepackage{subfiles}
+\externaldocument[XR-]{\subfix{thesis}}
+
+% Set in the following the name of the folder(s) containing figures to
+% facilitate their inclusion in the 
+\graphicspath{
+  {Figures/} % others appended next to it, e.g.: {Drawings/}{Graphs/}...
+}
+
+
+%%% ===== BEGIN OVERLEAF_EXTERNAL_DOC
+%% For Overleaf only, in order to allow cross referencing to work in subfiles
+%% uncomment the following lines:
+%
+%\makeatletter
+%\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+%  \typeout{(#1)}
+%  \@addtofilelist{#1}
+%  \IfFileExists{#1}{}{\typeout{No file #1.}}
+%}
+%\makeatother
+%
+%\newcommand*{\myexternaldocument}[1]{%
+%    \externaldocument[XR-]{\subfix{#1}}%
+%    \addFileDependency{\subfix{#1.tex}} % in general this can be left out to speed up compilation time
+%    \addFileDependency{\subfix{#1.aux}}%
+%}
+%
+%%% ====== END OVERLEAF_EXTERNAL_DOC
+
+
+%%% ===== Packages used for the purpose of this example (can be removed later)
+\usepackage{verbatim} % to make the code-like elements
+\usepackage[math]{blindtext} % to make the auto-generated lipsum parts
+
+
+%%% ===== List of recommended packages you need to include
+% NOTE: Package for the todo notes. Notice that it uses multiple packages such as
+% ifthen, xkeyval, xcolor, tikz (w/ graphicx) and calc, and thus they need
+% to be called before todonotes if specific options are wanted.
+% Very useful to track todos in the margins, and with the option 
+% `obeyDraft', all todos disappear when setting the class into `final'
+\usepackage{xcolor} % to use colours in different parts
+\usepackage[obeyDraft, textsize=small, colorinlistoftodos]{todonotes}
+
+% Unless you passed the option `nohyperref' to the uoythesis class, the hyperref 
+% package is already loaded, and should be set up using the hypersetup command
+% (see the hyperref documentation for details)
+\hypersetup{%
+  colorlinks=true, % color hyperlinks instead of putting boxes around them
+ 	linkcolor=blue!80!black, % references in dark blue
+	citecolor=green!60!black, % citations in green
+	filecolor=magenta,     % cross-references in darker magenta
+  % uncomment and fill in below to add metadata to pdf for accessibility reasons  
+%  pdfinfo={ 
+%	   Title={Thesis title},
+%		 Subject={subject of thesis},
+%    Author={Your name},
+%    Keywords={keyword1; keyword2...},
+%    Language={English}
+%  }
+}
+
+%%% ===== List the packages you want to use
+%% NOTE: you might need to take care of the order in which some are included,
+%% such as ticz/graphicx that need to go above todonotes
+\usepackage{xspace} % for automatic spaces after text commands
+\usepackage{amsmath, amsthm}
+\usepackage{amssymb, amsfonts}
+\usepackage{mathrsfs} %for stylistic AG
+\usepackage{url}
+
+
+%%% ===== Bibliography setup
+% It is strongly advised to automate your bibliography through a bib file
+% and to maintain it through a appropriate software like Jabref.
+\usepackage[eprint,          % Include information for pre-prints.
+            doi=false,
+            eprint=true,
+            url=false,
+            maxnames=10,     % Truncate lists of more than 10 authors.
+            giveninits=true, % Only output the initials of an author's given
+                             % names.
+            safeinputenc     % Fix for biber not playing nice with breve accents
+                             % (i.e. \u{}), see
+                             % https://tex.stackexchange.com/a/170586/27664.
+           ]{biblatex}
+% add each of you bibliography files with extension with path relatively
+% to this preamble file
+\addbibresource{\subfix{Bibfiles/firstbib.bib}}
+
+%%% ===== List of your own macros here
+\newcommand{\AG}{\ensuremath{\mathscr{A\hspace*{-3pt}{G}}}\xspace}
